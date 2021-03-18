@@ -16,4 +16,9 @@ class Coordinate {
         Coordinate c = (Coordinate) o;
         return (this.x==c.x && this.y==c.y);
     }
+
+    @Override
+    public String toString() {
+        return "(" + this.x + ", " + this.y + ")";
+    }
 }
