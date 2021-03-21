@@ -3,7 +3,7 @@ class Coordinate implements Comparable<Coordinate>{
     private int x;
     private int y;
     private char c;
-    private double distance;
+    private double distance; // Note: I don't think we even need this.
 
     /**
      * Default constructor.
@@ -26,6 +26,14 @@ class Coordinate implements Comparable<Coordinate>{
         this.y = coor.y;
         this.c = coor.c;
         this.distance = Double.MAX_VALUE/2;
+    }
+
+    public int getX() {
+        return this.x;
+    }
+
+    public int getY() {
+        return this.y;
     }
 
     @Override

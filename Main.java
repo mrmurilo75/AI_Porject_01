@@ -21,6 +21,41 @@ public class Main {
         }
     }
 
+    private static void nearestNeighbour(ArrayList<Coordinate> base, ArrayList<Coordinate> answer) {
+     
+        Coordinate cur = base.remove(0);
+        while(cur != null) {
+            answer.add(cur);
+            cur = findNearest(cur, base);
+        }
+        return; 
+    }
+
+    private static Coordinate findNearest(Coordinate cur, ArrayList<Coordinate> base) {
+        if(base.size()==0) return null;
+
+        int toBeRemoved = 0;
+        double distance = Double.MAX_VALUE;
+        double curX = (double) cur.getX();
+        double curY = (double) cur.getY();
+
+        for(int i = 0; i < base.size(); i++) {
+            double nextX = base.get(i).getX();
+            double nextY = base.get(i).getY();
+            double tmp = euclidianDistance(curX, curY, nextX, nextY);
+            if(tmp<distance) {
+                distance = tmp;
+                toBeRemoved = i;
+            }
+        }
+
+        return base.remove(toBeRemoved);
+    }
+
+    private static double euclidianDistance(double x1, double y1, double x2, double y2) {
+        return Math.pow((x1-x2), 2) + Math.pow((y1-y2), 2);
+    }
+
     /**
      * Clones an arraylist of coordinates and its contents.
      * 
@@ -87,9 +122,14 @@ public class Main {
         }
 
         while (true) {
+
+            ArrayList<Coordinate> base = cloneList(list);
+            ArrayList<Coordinate> result = new ArrayList<>();
+
             System.out.println("Please enter the number corresponding to the function you desire.");
             System.out.println("0 - Exit the program.");
             System.out.println("1 - Random permutation");
+            System.out.println("2 - Nearest Neighbour");
             // TODO
             // Add the functions here as we create them;
             int choice = stdin.nextInt();
@@ -99,14 +139,15 @@ public class Main {
                 stdin.close();
                 return;
             case 1:
-                ArrayList<Coordinate> base = cloneList(list);
-                ArrayList<Coordinate> result = new ArrayList<>();
                 randomPermutation(base, result);
-                printArrayList(result);
                 break;
+            case 2:
+                nearestNeighbour(base, result);
             default:
                 break;
             }
+
+            printArrayList(result);
         }
 
     }
