@@ -21,6 +21,11 @@ public class Main {
         }
     }
 
+    /**
+     * Insert into the answer ArrayList the neighbours sorted by who is nearest to the starting point.
+     * @param base The array containing the points we wish to operate on.
+     * @param answer The array in which we wish to put the result in.
+     */
     private static void nearestNeighbour(ArrayList<Coordinate> base, ArrayList<Coordinate> answer) {
      
         Coordinate cur = base.remove(0);
@@ -31,6 +36,12 @@ public class Main {
         return; 
     }
 
+    /**
+     * Analyses all non-visited neighbours and finds the nearest.
+     * @param cur The current coordinate we are measuring distances from.
+     * @param base The ArrayList containing its neighbours.
+     * @return the nearest coordinate.
+     */
     private static Coordinate findNearest(Coordinate cur, ArrayList<Coordinate> base) {
         if(base.size()==0) return null;
 
@@ -52,6 +63,14 @@ public class Main {
         return base.remove(toBeRemoved);
     }
 
+    /**
+     * Find the square of the euclidian distance between two points.
+     * @param x1 X coordinate of the first point.
+     * @param y1 Y coordinate of the first point.
+     * @param x2 X coordinate of the second point.
+     * @param y2 Y coordinate of the second point.
+     * @return the square of the euclidian distance.
+     */
     private static double euclidianDistance(double x1, double y1, double x2, double y2) {
         return Math.pow((x1-x2), 2) + Math.pow((y1-y2), 2);
     }
@@ -84,6 +103,10 @@ public class Main {
         return clonedSet;
     }
 
+    /**
+     * Prints an ArrayList of coordinates using their names.
+     * @param result The ArrayList to be printed.
+     */
     private static void printArrayList(ArrayList<Coordinate> result) {
         String ans = "[";
         for (int i = 0; i < result.size(); i++) {
