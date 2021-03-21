@@ -1,8 +1,9 @@
 
-class Coordinate {
+class Coordinate implements Comparable<Coordinate>{
     private int x;
     private int y;
     private char c;
+    private double distance;
 
     /**
      * Default constructor.
@@ -24,6 +25,7 @@ class Coordinate {
         this.x = coor.x;
         this.y = coor.y;
         this.c = coor.c;
+        this.distance = Double.MAX_VALUE/2;
     }
 
     @Override
@@ -46,5 +48,14 @@ class Coordinate {
      */
     public String printName() {
         return Character.toString(c);
+    }
+
+    @Override
+    public int compareTo(Coordinate c) {
+        if(this.distance > c.distance) return +1;
+        if(this.distance < c.distance) return -1;
+        if(this.c > c.c) return +1;
+        if(this.c < c.c) return -1;
+        return 0;
     }
 }
