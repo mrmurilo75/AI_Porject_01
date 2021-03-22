@@ -23,7 +23,7 @@ class Coordinate implements Comparable<Coordinate>{
      * @param none
      * @return A new Coordinate clone of this element
      */
-    public clone() {
+    public Coordinate clone() {
 	    return new Coordinate(this.x, this.y, this.c);
     }
 

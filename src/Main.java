@@ -52,9 +52,9 @@ public class Main {
         for(int i = 0; i < base.size(); i++) {
             double nextX = base.get(i).getX();
             double nextY = base.get(i).getY();
-            double tmp = euclidianDistance(curX, curY, nextX, nextY);
-            if(tmp<distance) {
-                distance = tmp;
+            double nextDist = euclidianDistance(curX, curY, nextX, nextY);
+            if(nextDist<distance) {
+                distance = nextDist;
                 toBeRemoved = i;
             }
         }
@@ -71,7 +71,7 @@ public class Main {
      * @return the square of the euclidian distance.
      */
     private static double euclidianDistance(double x1, double y1, double x2, double y2) {
-        return Math.pow((x1-x2), 2) + Math.pow((y1-y2), 2);
+        return (x1-x2)*(x1-x2) + (y1-y2)*(y1-y2);
     }
 
     /**
@@ -80,7 +80,7 @@ public class Main {
      * @param base The ArrayList to be cloned.
      * @return A new ArrayList with the same elements as the parameter.
      */
-    private static ArrayList<Coordinate> cloneList(ArrayList<Coordinate> base) {
+    private static ArrayList<Coordinate> cloneArrayList(ArrayList<Coordinate> base) {
         ArrayList<Coordinate> clonedList = new ArrayList<>(base.size());
         for (Coordinate c : base) {
             clonedList.add(c.clone());
@@ -120,12 +120,14 @@ public class Main {
     public static void main(String[] args) {
         Scanner stdin = new Scanner(System.in);
 
-        System.out.println("Please enter the number of points to be generated.");
+        System.out.println("Please enter the number of points to be generated: ");
         int n = stdin.nextInt();
-        list = new ArrayList<>();
+        list = new ArrayList<>(n);
 
-        System.out.println("Please enter the boundary to generate the points.");
+        System.out.println("Please enter the boundary to generate the points: ");
         int m = stdin.nextInt();
+
+	if(n>(4*m*m)) return;
 
         for (int i = 0; i < n; i++) {
             int x = new Random().nextInt(2 * m - 1) - m;
@@ -133,8 +135,8 @@ public class Main {
 
             Coordinate coor = new Coordinate(x, y, (char) ('A' + i));
             if (list.contains(coor))
-                i--; // Not very efficient yeah but since it's TSP I'm hoping inputs are gonna be small.
-            else
+                i--; 		//  n/(2*m)^2 chance
+	    else
                 list.add(coor);
         }
 
@@ -144,28 +146,28 @@ public class Main {
 
         while (true) {
 
-            ArrayList<Coordinate> base = cloneList(list);
+            ArrayList<Coordinate> base = new ArrayList<>(list);	// a shallow copy (its ok bc we dont change the elements themselves)
             ArrayList<Coordinate> result = new ArrayList<>();
 
             System.out.println("Please enter the number corresponding to the function you desire.");
-            System.out.println("0 - Exit the program.");
             System.out.println("1 - Random permutation");
             System.out.println("2 - Nearest Neighbour");
+            System.out.println("0 - Exit the program.");
             // TODO
             // Add the functions here as we create them;
-            int choice = stdin.nextInt();
-            switch (choice) {
-            case 0:
-                System.out.println("Exiting...");
-                stdin.close();
-                return;
-            case 1:
-                randomPermutation(base, result);
-                break;
-            case 2:
-                nearestNeighbour(base, result);
-            default:
-                break;
+
+	    int choice = stdin.nextInt();
+
+	    switch (choice) {
+		    case 0:
+			System.out.println("Exiting...");
+			stdin.close();
+			return;
+		    case 1:
+			randomPermutation(base, result);
+			break;
+		    case 2:
+			nearestNeighbour(base, result);
             }
 
             printArrayList(result);
