@@ -18,6 +18,13 @@ class Coordinate implements Comparable<Coordinate>{
 	this.distance = Double.POSITIVE_INFINITY;
     }
 
+    public Coordinate(int x, int y) {
+        this.x = x;
+        this.y = y;
+        this.c = '\0';
+	this.distance = Double.POSITIVE_INFINITY;
+    }
+
     /**
      * Clones this element.
      * @param none
@@ -25,6 +32,14 @@ class Coordinate implements Comparable<Coordinate>{
      */
     public Coordinate clone() {
 	    return new Coordinate(this.x, this.y, this.c);
+    }
+
+    public Coordinate subtract(Coordinate that) {
+	    return new Coordinate(this.x - that.getX(), this.y - that.getY());
+    }
+
+    public int dotProduct(Coordinate that) {
+	    return (this.x * that.getX()) + (this.y - that.getY());
     }
 
     public int getX() {
