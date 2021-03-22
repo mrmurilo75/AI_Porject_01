@@ -6,7 +6,6 @@ import java.util.Random;
 public class Main {
     static ArrayList<Coordinate> list;
 
-    // Maybe we should put the classes in a different file? I don't know...
     /**
      * Generates a random permutation of the points in an array.
      * 
@@ -84,7 +83,7 @@ public class Main {
     private static ArrayList<Coordinate> cloneList(ArrayList<Coordinate> base) {
         ArrayList<Coordinate> clonedList = new ArrayList<>(base.size());
         for (Coordinate c : base) {
-            clonedList.add(new Coordinate(c));
+            clonedList.add(c.clone());
         }
         return clonedList;
     }
@@ -98,7 +97,7 @@ public class Main {
     private static TreeSet<Coordinate> cloneToTreeSet(ArrayList<Coordinate> base) {
         TreeSet<Coordinate> clonedSet = new TreeSet<>();
         for(Coordinate c : base) {
-            clonedSet.add(new Coordinate(c));
+            clonedSet.add(c.clone());
         }
         return clonedSet;
     }
@@ -134,8 +133,7 @@ public class Main {
 
             Coordinate coor = new Coordinate(x, y, (char) ('A' + i));
             if (list.contains(coor))
-                i--; // Not very efficient yeah but since it's TSP I'm hoping inputs are gonna be
-                     // small.
+                i--; // Not very efficient yeah but since it's TSP I'm hoping inputs are gonna be small.
             else
                 list.add(coor);
         }

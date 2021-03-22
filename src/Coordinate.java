@@ -15,17 +15,16 @@ class Coordinate implements Comparable<Coordinate>{
         this.x = x;
         this.y = y;
         this.c = c;
+	this.distance = Double.POSITIVE_INFINITY;
     }
 
     /**
-     * Constructor for cloning elements.
-     * @param coor The coordinate from which we get our variables.
+     * Clones this element.
+     * @param none
+     * @return A new Coordinate clone of this element
      */
-    public Coordinate(Coordinate coor) {
-        this.x = coor.x;
-        this.y = coor.y;
-        this.c = coor.c;
-        this.distance = Double.MAX_VALUE/2;
+    public clone() {
+	    return new Coordinate(this.x, this.y, this.c);
     }
 
     public int getX() {
