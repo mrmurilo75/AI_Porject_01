@@ -1,11 +1,5 @@
 import java.util.ArrayList;
-import java.util.TreeSet;
-import java.util.TreeMap;
 import java.util.Random;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.AbstractMap;
-import java.util.AbstractMap.SimpleEntry;
 
 class Candidate extends ArrayList<Coordinate>{
     ArrayList<Coordinate> list;

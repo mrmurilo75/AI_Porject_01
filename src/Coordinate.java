@@ -1,4 +1,3 @@
-
 class Coordinate implements Comparable<Coordinate>{
     private int x;
     private int y;
