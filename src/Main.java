@@ -105,8 +105,6 @@ public class Main {
             System.out.println("1 - Random permutation");
             System.out.println("2 - Nearest Neighbour");
             System.out.println("0 - Exit the program.");
-            // TODO
-            // Add the functions here as we create them;
 	
 	    choice = stdin.nextInt();
 
@@ -125,21 +123,35 @@ public class Main {
 			continue;		// not sure if this will work
             }
 
-	    if(UIfindIntersect())
-		    findIntersect(result);
-
             System.out.println("Please enter the number corresponding to the function you desire.");
             System.out.println("1 - Best-improvement First");
             System.out.println("2 - First-improvement");
             System.out.println("3 - Less-conflicts");
             System.out.println("4 - Anyone");
             System.out.println("0 - Exit the program.");
-            // TODO
-            // Add the functions here as we create them;
         
             choice = stdin.nextInt();
 
+	    switch (choice) {
+		    case 1:
+			result.improveBestFirst();
+			break;
+		    case 2:
+			result.improveFirst();
+			break;
+		    case 3:
+			result.improveLessConflict();
+			break;
+		    case 4:
+			result.improve();
+			break;
+		    default:
+			System.out.println("Invalid input. Try again.");
+			continue;		// not sure if this will work
+            }
+
             printArrayList(result);
+
         }
 
     }

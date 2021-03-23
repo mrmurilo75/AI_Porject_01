@@ -3,9 +3,11 @@ import java.util.Random;
 
 class Candidate extends ArrayList<Coordinate>{
     ArrayList<Coordinate> list;
+    IntersectionMap intersected;
 
     public Candidate(ArrayList<Coordinate> result){
 	    super(result);
+	    intersected = new IntersectionMap(this);
     }
 
     /**
@@ -78,4 +80,34 @@ class Candidate extends ArrayList<Coordinate>{
     private static double euclidianDistance(double x1, double y1, double x2, double y2) {
         return (x1-x2)*(x1-x2) + (y1-y2)*(y1-y2);
     }
+
+    private void exchange(Coordinate j, Coordinate k){
+	    int ij = this.indexOf(j), 
+		ik = this.indexOf(k);
+	    this.add(ij, k);
+	    this.add(ik, j);
+    }
+
+    /*
+     *
+     */
+    public void improveBestFirst(){
+    }
+
+    /*
+     *
+     */
+    public void improveFirst(){
+    }
+
+    /*
+     *
+     */
+    public void improveLessConflict(){}
+
+    /*
+     *
+     */
+    public void improve(){}
+
 }
