@@ -49,7 +49,7 @@ public class Main {
      * Prints an ArrayList of coordinates using their names.
      * @param result The ArrayList to be printed.
      */
-    private static void printArrayList(ArrayList<Coordinate> result) {
+    static void printArrayList(ArrayList<Coordinate> result) {
         if(result == null){
 		System.out.println("result is null");
 		return;
