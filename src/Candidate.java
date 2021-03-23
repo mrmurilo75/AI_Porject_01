@@ -3,13 +3,16 @@ import java.util.Random;
 
 class Candidate extends ArrayList<Coordinate> {
     ArrayList<Coordinate> list;
+    IntersectionList intersected;
     NeighbourList nbors;
     public int intersections;
 
-    public Candidate(ArrayList<Coordinate> result) {
-        list = new ArrayList<>(result);
-        intersections = 0;
-        nbors = new NeighbourList(this);
+    public Candidate(ArrayList<Coordinate> result){
+	    super(result);
+	    list = result;
+	    intersected = new IntersectionList(this);
+	    nbors = new NeighboursList(this);
+	    intersections = 0;
     }
 
     /**
@@ -103,7 +106,11 @@ class Candidate extends ArrayList<Coordinate> {
     /*
      *
      */
-    public void improveFirst() {
+    public void improveFirst(){
+	    Pair<Pair<Coordinate>> cur = intersected.remove(0);
+	    this.exchange(cur.getKey().getValue(), cur.getValue().getKey());
+	    while(intersected.size() > 0)
+		    this.improveFirst();
     }
 
     /*
@@ -118,29 +125,12 @@ class Candidate extends ArrayList<Coordinate> {
     public void improve() {
     }
 
-    private void printArrayList(ArrayList<Coordinate> result) {
-        if(result == null){
-		System.out.println("result is null");
-		return;
-	}
-        String ans = "[";
-        for (int i = 0; i < result.size(); i++) {
-            ans += result.get(i).printName();
-            if (i != result.size() - 1)
-                ans += ", ";
-        }
-        ans += "]";
-        System.out.println(ans);
-    }
-
- 
-
     public void printNeighbours() {
-        System.out.print("Original order: ");
-        printArrayList(this.list);
-        System.out.println("Number of intersections: " + this.intersections);
-        for(ArrayList<Coordinate> list : nbors) {
-            printArrayList(list);
-        }
+         System.out.print("Original order: ");
+         printArrayList(this.list);
+         System.out.println("Number of intersections: " + this.intersections);
+         for(ArrayList<Coordinate> list : nbors) {
+             printArrayList(list);
+         }
     }
 }
