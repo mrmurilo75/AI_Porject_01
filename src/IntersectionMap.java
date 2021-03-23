@@ -5,7 +5,7 @@ class IntersectionMap extends TreeMap< Pair<Coordinate>, Pair<Coordinate> >{
 
     public IntersectionMap(){ super(); }
 
-    public IntersectionMap(ArrayList<Coordinate> list){
+    public IntersectionMap(Candidate list){
 	    super();
 
 	    list.add( list.get(0) );		// put first at the end to loop
