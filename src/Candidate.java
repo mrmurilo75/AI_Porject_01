@@ -98,6 +98,10 @@ class Candidate extends ArrayList<Coordinate>{
      *
      */
     public void improveFirst(){
+	    Pair<Pair<Coordinate>> cur = intersected.remove(0);
+	    this.exchange(cur.getKey().getValue(), cur.getValue().getKey());
+	    while(intersected.size() > 0)
+		    this.improveFirst();
     }
 
     /*
