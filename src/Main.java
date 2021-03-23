@@ -95,18 +95,19 @@ public class Main {
 
 		while (true) {
 
-			if(choice == 0){
-				System.out.println("Exiting...");
-				stdin.close();
-				return;
-			}
-
 			System.out.println("Please enter the number corresponding to the function you desire.");
 			System.out.println("1 - Random permutation");
 			System.out.println("2 - Nearest Neighbour");
 			System.out.println("0 - Exit the program.");
 
 			choice = stdin.nextInt();
+
+			if(choice == 0){
+				System.out.println("Exiting...");
+				stdin.close();
+				return;
+			}
+
 
 			ArrayList<Coordinate> base = new ArrayList<>(list);	// a shallow copy (its ok bc we dont change the elements themselves)
 			Candidate result = null;
@@ -134,26 +135,29 @@ public class Main {
 
 			choice = stdin.nextInt();
 
-			switch (choice) {
-				case 1:
-					result.improveBestFirst();
-					break;
-				case 2:
-					result.improveFirst();
-					break;
-				case 3:
-					result.improveLessConflict();
-					break;
-				case 4:
-					result.improve();
-					break;
-				default:
-					System.out.println("Invalid input. Try again.");
-					continue;		// not sure if this will work
+			while(result.intersections != 0) {
+
+				switch (choice) {
+					case 1:
+						result = new Candidate(result.nbors.get(result.nbors.findSmallestPerimeter()));	
+						break;
+					case 2:
+						result = new Candidate(result.nbors.get(0));
+						break;
+					case 3:
+						result = new Candidate(result.nbors.get(result.nbors.findLessIntersections()));
+						break;
+					case 4:
+						result = new Candidate(result.nbors.get(new Random().nextInt(result.nbors.size())));
+						break;
+					default:
+						System.out.println("Invalid input. Try again.");
+						continue;		// not sure if this will work
+				}
+				if(result.intersections==0) System.out.print("Found the simple polygon: ");
+				printArrayList(result);
 			}
-
-			printArrayList(result);
-
+			System.out.println(" ----------------------------  ");
 		}
 
 	}

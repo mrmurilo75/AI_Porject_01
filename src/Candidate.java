@@ -61,14 +61,14 @@ class Candidate extends ArrayList<Coordinate> {
 			return null;
 
 		int toBeRemoved = 0;
-		double distance = Double.MAX_VALUE;
-		double curX = (double) cur.getX();
-		double curY = (double) cur.getY();
+		int distance = Integer.MAX_VALUE;
+		int curX = cur.getX();
+		int curY = cur.getY();
 
 		for (int i = 0; i < base.size(); i++) {
-			double nextX = base.get(i).getX();
-			double nextY = base.get(i).getY();
-			double nextDist = euclidianDistance(curX, curY, nextX, nextY);
+			int nextX = base.get(i).getX();
+			int nextY = base.get(i).getY();
+			int nextDist = euclidianDistance(curX, curY, nextX, nextY);
 			if (nextDist < distance) {
 				distance = nextDist;
 				toBeRemoved = i;
@@ -87,9 +87,13 @@ class Candidate extends ArrayList<Coordinate> {
 	 * @param y2 Y coordinate of the second point.
 	 * @return the square of the euclidian distance.
 	 */
-	private static double euclidianDistance(double x1, double y1, double x2, double y2) {
+	private static int euclidianDistance(int x1, int y1, int x2, int y2) {
 		return (x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2);
 	}
+
+    public static int euclidianDistance(Coordinate a, Coordinate b) {
+        return euclidianDistance(a.getX(), a.getY(), b.getX(), b.getY());
+    }
 
 	private void exchange(Coordinate j, Coordinate k) {
 		int ij = this.indexOf(j), ik = this.indexOf(k);

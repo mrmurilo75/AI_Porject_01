@@ -10,7 +10,6 @@ class NeighbourList extends ArrayList<ArrayList<Coordinate>>{
 
 		ArrayList<Coordinate> temporaryList = new ArrayList<Coordinate>(candidate.list);
 		temporaryList.add(temporaryList.get(0));
-		int conflicts = 0;
 		Coordinate a, b, c, d;
 
 		for(int i = 0; i < temporaryList.size()-3; i++) {
@@ -29,6 +28,52 @@ class NeighbourList extends ArrayList<ArrayList<Coordinate>>{
 
 	}
 
+	public int findSmallestPerimeter() {
+		int size = Integer.MAX_VALUE;
+		int answer = -1;
+		for(int i = 0; i < this.size(); i++) {
+			int tmp = 0;
+			ArrayList<Coordinate> current = this.get(i);
+			for(int j = 0; j < current.size(); j++) {
+				if(j<this.get(i).size()-1) tmp += Candidate.euclidianDistance(current.get(j), current.get(j+1));
+				else tmp += Candidate.euclidianDistance(current.get(j), current.get(0));
+			}
+			if(tmp<size){
+				size = tmp;
+				answer = i;
+			}
+		}
+		return answer;
+	}
+
+	public int findLessIntersections() {
+		int intersections = Integer.MAX_VALUE;
+		int answer = -1;
+		for(int count = 0; count < this.size(); count++) {
+			ArrayList<Coordinate> temporaryList = this.get(count);
+			temporaryList.add(temporaryList.get(0));
+			int conflicts = 0;
+			Coordinate a, b, c, d;
+			for(int i = 0; i < temporaryList.size()-3; i++) {
+				a = temporaryList.get(i);
+				b = temporaryList.get(i+1);
+				for(int j = i+2; j < temporaryList.size()-1; j++) {
+					if(i == 0 && j == temporaryList.size()-2) continue;
+					c = temporaryList.get(j);
+					d = temporaryList.get(j+1);
+					if(segmentsIntersect(a, b, c, d)) {
+						conflicts++;
+					}
+				}
+			}
+			if(conflicts<intersections) {
+				intersections = conflicts;
+				answer = count;
+			}
+			temporaryList.remove(temporaryList.size()-1);
+		}
+		return answer;
+	}
 
 	private ArrayList<Coordinate> twoExchange(Candidate candidate, Coordinate b, Coordinate c) {
 		ArrayList<Coordinate> answer = new ArrayList<>(candidate.list);
