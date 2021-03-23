@@ -1,11 +1,10 @@
 import java.util.ArrayList;
-import java.util.TreeMap;
 
-class IntersectionMap extends TreeMap< Pair<Coordinate>, Pair<Coordinate> >{
+class IntersectionList extends ArrayList< Pair<Pair<Coordinate>> >{
 
-    public IntersectionMap(){ super(); }
+    public IntersectionList(){ super(); }
 
-    public IntersectionMap(Candidate list){
+    public IntersectionList(Candidate list){
 	    super();
 
 	    list.add( list.get(0) );		// put first at the end to loop
@@ -15,7 +14,7 @@ class IntersectionMap extends TreeMap< Pair<Coordinate>, Pair<Coordinate> >{
 		    for(int j=i+1; j+1 < list.size(); j++){
 		    Pair<Coordinate> seg2 = new Pair<>(list.get(j), list.get(j+1));
 			    if(segmentsIntersect(seg1, seg2))
-				    this.put(seg1, seg2);
+				    this.add(new Pair<Pair<Coordinate>>(seg1, seg2));
 		    }
 	    }
 

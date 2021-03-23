@@ -3,11 +3,11 @@ import java.util.Random;
 
 class Candidate extends ArrayList<Coordinate>{
     ArrayList<Coordinate> list;
-    IntersectionMap intersected;
+    IntersectionList intersected;
 
     public Candidate(ArrayList<Coordinate> result){
 	    super(result);
-	    intersected = new IntersectionMap(this);
+	    intersected = new IntersectionList(this);
     }
 
     /**
