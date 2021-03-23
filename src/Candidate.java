@@ -10,9 +10,9 @@ class Candidate extends ArrayList<Coordinate> {
     public Candidate(ArrayList<Coordinate> result){
 	    super(result);
 	    list = result;
+	    intersections = 0;
 	    intersected = new IntersectionList(this);
 	    nbors = new NeighbourList(this);
-	    intersections = 0;
     }
 
     /**
@@ -130,7 +130,7 @@ class Candidate extends ArrayList<Coordinate> {
          Main.printArrayList(this);
          System.out.println("Number of intersections: " + this.intersections);
          for(ArrayList<Coordinate> list : nbors) {
-             Main.printArrayList(this);
+             Main.printArrayList(list);
          }
     }
 }

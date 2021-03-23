@@ -22,7 +22,7 @@ class NeighbourList extends ArrayList<ArrayList<Coordinate>>{
 				d = temporaryList.get(j+1);
 				if(segmentsIntersect(a, b, c, d)) {
 					candidate.intersections++;
-					this.add(twoExchange(candidate, a, b, c, d));
+					this.add(twoExchange(candidate, b, c));
 				}
 			}
 		}
@@ -30,7 +30,7 @@ class NeighbourList extends ArrayList<ArrayList<Coordinate>>{
     }
 
 
-	private ArrayList<Coordinate> twoExchange(Candidate candidate, Coordinate a, Coordinate b, Coordinate c, Coordinate d) {
+	private ArrayList<Coordinate> twoExchange(Candidate candidate, Coordinate b, Coordinate c) {
 		ArrayList<Coordinate> answer = new ArrayList<>(candidate.list);
 		int cIndex = answer.indexOf(c);
 		int bIndex = answer.indexOf(b);
