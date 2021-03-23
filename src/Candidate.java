@@ -3,7 +3,7 @@ import java.util.Random;
 
 class Candidate extends ArrayList<Coordinate> {
 	ArrayList<Coordinate> list;
-	IntersectionList intersected;
+//	IntersectionList intersected;
 	NeighbourList nbors;
 	public int intersections;
 
@@ -11,7 +11,7 @@ class Candidate extends ArrayList<Coordinate> {
 		super(result);
 		list = result;
 		intersections = 0;
-		intersected = new IntersectionList(this);
+//		intersected = new IntersectionList(this);
 		nbors = new NeighbourList(this);
 	}
 
@@ -103,13 +103,13 @@ class Candidate extends ArrayList<Coordinate> {
 
 	/*
 	 *
-	 */
+	 *
 	public void improveBestFirst() {
 	}
 
 	/*
 	 *
-	 */
+	 *
 	public void improveFirst(){
 		Pair<Pair<Coordinate>> cur = intersected.remove(0);
 		this.exchange(cur.getKey().getValue(), cur.getValue().getKey());
@@ -119,16 +119,21 @@ class Candidate extends ArrayList<Coordinate> {
 
 	/*
 	 *
-	 */
+	 *
 	public void improveLessConflict() {
 	}
 
 	/*
 	 *
-	 */
+	 *
 	public void improve() {
 	}
 
+	*/
+
+	/*
+	 *
+	 */
 	public void printNeighbours() {
 		 System.out.print("Original order: ");
 		 Main.printArrayList(this);

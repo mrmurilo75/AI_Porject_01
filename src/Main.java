@@ -67,33 +67,35 @@ public class Main {
 	public static void main(String[] args) {
 		stdin = new Scanner(System.in);
 
-		System.out.println("Please enter the number of points to be generated: ");
-		int n = stdin.nextInt();
-		list = new ArrayList<>(n);
-
-		System.out.println("Please enter the boundary to generate the points: ");
-		int m = stdin.nextInt();
-
-		if(n>(4*m*m)) return;
-
-		for (int i = 0; i < n; i++) {
-			int x = new Random().nextInt(2 * m - 1) - m;
-			int y = new Random().nextInt(2 * m - 1) - m;
-
-			Coordinate coor = new Coordinate(x, y, (char) ('A' + i));
-			if (list.contains(coor))
-				i--; 		//  n/(2*m)^2 chance
-			else
-				list.add(coor);
-		}
-
-		for (Coordinate c : list) {
-			System.out.println(c.printName() + " " + c.toString());
-		}
-
-		int choice = -1;
-
 		while (true) {
+
+			System.out.println("Please enter the number of points to be generated: ");
+			int n = stdin.nextInt();
+			list = new ArrayList<>(n);
+
+			System.out.println("Please enter the boundary to generate the points: ");
+			int m = stdin.nextInt();
+
+			if(n>(4*m*m)) return;
+
+			for (int i = 0; i < n; i++) {
+
+				int x = new Random().nextInt(2 * m - 1) - m;
+				int y = new Random().nextInt(2 * m - 1) - m;
+
+				Coordinate coor = new Coordinate(x, y, (char) ('A' + i));
+				if (list.contains(coor))
+					i--; 		//  n/(2*m)^2 chance
+				else
+					list.add(coor);
+			}
+
+			for (Coordinate c : list) {
+				System.out.println(c.printName() + " " + c.toString());
+			}
+
+			int choice = -1;
+
 
 			System.out.println("Please enter the number corresponding to the function you desire.");
 			System.out.println("1 - Random permutation");
@@ -126,14 +128,16 @@ public class Main {
 
 			result.printNeighbours();
 
-			System.out.println("Please enter the number corresponding to the function you desire.");
-			System.out.println("1 - Best-improvement First");
-			System.out.println("2 - First-improvement");
-			System.out.println("3 - Less-conflicts");
-			System.out.println("4 - Anyone");
-			System.out.println("0 - Exit the program.");
+			if(result.intersections != 0) {
+				System.out.println("Please enter the number corresponding to the function you desire.");
+				System.out.println("1 - Best-improvement First");
+				System.out.println("2 - First-improvement");
+				System.out.println("3 - Less-conflicts");
+				System.out.println("4 - Anyone");
+				System.out.println("0 - Exit the program.");
 
-			choice = stdin.nextInt();
+				choice = stdin.nextInt();
+			}
 
 			while(result.intersections != 0) {
 
@@ -154,9 +158,11 @@ public class Main {
 						System.out.println("Invalid input. Try again.");
 						continue;		// not sure if this will work
 				}
-				if(result.intersections==0) System.out.print("Found the simple polygon: ");
+				System.out.print("Current solution: ");
 				printArrayList(result);
 			}
+			System.out.print("Found the simple polygon: ");
+			printArrayList(result);
 			System.out.println(" ----------------------------  ");
 		}
 
