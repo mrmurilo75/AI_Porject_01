@@ -123,6 +123,8 @@ public class Main {
 			continue;		// not sure if this will work
             }
 
+	    result.printNeighbours();
+
             System.out.println("Please enter the number corresponding to the function you desire.");
             System.out.println("1 - Best-improvement First");
             System.out.println("2 - First-improvement");

@@ -1,13 +1,17 @@
 import java.util.ArrayList;
 import java.util.Random;
 
-class Candidate extends ArrayList<Coordinate>{
+class Candidate extends ArrayList<Coordinate> {
     ArrayList<Coordinate> list;
     IntersectionList intersected;
+    NeighbourList nbors;
+    public int intersections;
 
     public Candidate(ArrayList<Coordinate> result){
 	    super(result);
+	    list = result;
 	    intersected = new IntersectionList(this);
+	    nbors = new NeighboursList(this);
     }
 
     /**
@@ -114,4 +118,12 @@ class Candidate extends ArrayList<Coordinate>{
      */
     public void improve(){}
 
+    public void printNeighbours() {
+         System.out.print("Original order: ");
+         printArrayList(this.list);
+         System.out.println("Number of intersections: " + this.intersections);
+         for(ArrayList<Coordinate> list : nbors) {
+             printArrayList(list);
+         }
+    }
 }
