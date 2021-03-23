@@ -36,9 +36,9 @@ class Coordinate implements Comparable<Coordinate>{
     public Coordinate subtract(Coordinate that) {
 	    return new Coordinate(this.x - that.getX(), this.y - that.getY());
     }
-
+    
     public int dotProduct(Coordinate that) {
-	    return (this.x * that.getX()) + (this.y - that.getY());
+	    return ((this.x*that.y) - (that.x*this.y));
     }
 
     public int getX() {

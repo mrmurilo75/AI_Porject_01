@@ -13,10 +13,11 @@ class NeighbourList extends ArrayList<ArrayList<Coordinate>>{
 		int conflicts = 0;
 		Coordinate a, b, c, d;
 
-		for(int i = 0; i < temporaryList.size()-2; i++) {
+		for(int i = 0; i < temporaryList.size()-3; i++) {
 			a = temporaryList.get(i);
 			b = temporaryList.get(i+1);
-			for(int j = i+1; j < temporaryList.size()-1; j++) {
+			for(int j = i+2; j < temporaryList.size()-1; j++) {
+				if(i == 0 && j == temporaryList.size()-2) continue;
 				c = temporaryList.get(j);
 				d = temporaryList.get(j+1);
 				if(segmentsIntersect(a, b, c, d)) {
@@ -27,6 +28,7 @@ class NeighbourList extends ArrayList<ArrayList<Coordinate>>{
 		}
 
     }
+
 
 	private ArrayList<Coordinate> twoExchange(Candidate candidate, Coordinate a, Coordinate b, Coordinate c, Coordinate d) {
 		ArrayList<Coordinate> answer = new ArrayList<>(candidate.list);
@@ -59,7 +61,8 @@ class NeighbourList extends ArrayList<ArrayList<Coordinate>>{
     }
 
     private static int dot(Coordinate p1, Coordinate p2, Coordinate p3) {
-	    return (p3.subtract(p1)).dotProduct(p1.subtract(p2));
+	    return (p3.subtract(p1)).dotProduct(p2.subtract(p1));
     }
+
 
 }
