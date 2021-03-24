@@ -3,21 +3,22 @@ import java.util.Random;
 
 class Candidate extends ArrayList<Coordinate> {
 	Candidate parent;
-	public int intersections;
+	private int intersectionCount;
 //	IntersectionList intersected;
 	NeighbourList neighbours;
 
 	public Candidate(ArrayList<Coordinate> parent){
 		super(parent);
 		parent = null;
-		intersections = -1;
+		intersectionCount = -1;
+		neighbours = null;
 	}
 
 	public Candidate(Candidate parent){
 		super(parent);
 		this.parent = parent.parent;
-		intersections = 0;
-		neighbours = new NeighbourList(this);
+		intersectionCount = -1;
+		neighbours = null;
 	}
 
 	public Candidate(ArrayList<Coordinate> parent, byte generator){
@@ -42,20 +43,17 @@ class Candidate extends ArrayList<Coordinate> {
 				}
 				break;
 			default:		// preferably throw Exception
-				parent = null;
-				intersections = -1;
+				intersectionCount = -1;
 				return;
 		}
 
-		intersections = 0;
+		intersectionCount = -1;
 //		intersected = new IntersectionList(this);
-		neighbours = new NeighbourList(this);
+		neighbours = null;
 	}
 
 	public boolean checkIntegrity(){
-		if(parent == null)
-			return false;
-		return true;
+		return this.size() == parent.size();
 	}
 
 	/**
@@ -122,41 +120,61 @@ class Candidate extends ArrayList<Coordinate> {
 		return euclidianDistance(a.getX(), a.getY(), b.getX(), b.getY());
 	}
 
+	/*
 	private void exchange(Coordinate j, Coordinate k) {
 		int ij = this.indexOf(j), ik = this.indexOf(k);
 		this.add(ij, k);
 		this.add(ik, j);
 	}
-
-	/*
-	 *
-	 *
-	public void improveBestFirst() {
-	}
-
-	/*
-	 *
-	 *
-	public void improveFirst(){
-		Pair<Pair<Coordinate>> cur = intersected.remove(0);
-		this.exchange(cur.getKey().getValue(), cur.getValue().getKey());
-		while(intersected.size() > 0)
-			this.improveFirst();
-	}
-
-	/*
-	 *
-	 *
-	public void improveLessConflict() {
-	}
-
-	/*
-	 *
-	 *
-	public void improve() {
-	}
-
 	*/
+
+	/*
+	 *
+	 */
+	public int getIntersectionCount(){
+		if(neighbours == null)
+			neighbours = new NeighbourList(this);
+		if(intersectionCount == -1)
+			intersectionCount = neighbours.size();
+		return intersectionCount;
+	}
+		
+	/*
+	 *
+	 */
+	public Candidate improveBestFirst() {
+		if(neighbours == null)
+			neighbours = new NeighbourList(this);
+		return neighbours.getSmallestPerimeter();
+	}
+
+	/*
+	 *
+	 */
+	public Candidate improveFirst(){
+		if(neighbours == null)
+			neighbours = new NeighbourList(this);
+		return neighbours.get(0);
+	}
+
+	/*
+	 *
+	 */
+	public Candidate improveLessConflict() {
+		if(neighbours == null)
+			neighbours = new NeighbourList(this);
+		return neighbours.getLessIntersections();
+	}
+
+	/*
+	 *
+	 */
+	public Candidate improveRandom() {
+		if(neighbours == null)
+			neighbours = new NeighbourList(this);
+		return neighbours.get( new Random().nextInt(neighbours.size()) );
+	}
+
 
 	/*
 	 *
@@ -164,7 +182,7 @@ class Candidate extends ArrayList<Coordinate> {
 	public void printNeighbours() {
 		 System.out.print("Original order: ");
 		 Main.printArrayList(this);
-		 System.out.println("Number of intersections: " + this.intersections);
+		 System.out.println("Number of intersections: " + this.intersectionCount);
 		 for(ArrayList<Coordinate> list : neighbours) {
 			 Main.printArrayList(list);
 		 }

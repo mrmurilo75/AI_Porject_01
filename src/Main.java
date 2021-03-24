@@ -119,7 +119,7 @@ public class Main {
 
 //			result.printNeighbours();
 
-			if(result.intersections != 0) {
+			if(result.getIntersectionCount() != 0) {
 				System.out.println("Please enter the number corresponding to the function you desire.");
 				System.out.println("1 - Best-improvement First");
 				System.out.println("2 - First-improvement");
@@ -130,20 +130,20 @@ public class Main {
 				choice = stdin.nextInt();
 			}
 
-			while(result.intersections != 0) {
+			while(result.getIntersectionCount() != 0) {
 
 				switch (choice) {
 					case 1:
-						result = result.neighbours.get(result.neighbours.findSmallestPerimeter());
+						result = result.improveBestFirst();
 						break;
 					case 2:
-						result = result.neighbours.get(0);
+						result = result.improveFirst();
 						break;
 					case 3:
-						result = result.neighbours.get(result.neighbours.findLessIntersections());
+						result = result.improveLessConflict();
 						break;
 					case 4:
-						result = result.neighbours.get(new Random().nextInt(result.neighbours.size()));
+						result = result.improveRandom();
 						break;
 					default:
 						System.out.println("Invalid input. Try again.");
