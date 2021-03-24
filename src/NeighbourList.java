@@ -17,7 +17,9 @@ class NeighbourList extends ArrayList<Candidate>{
 				c = base.get(j);
 				d = base.get(j+1);
 				if(segmentsIntersect(a, b, c, d)) {
-					this.add(twoExchange(candidate, b, c));
+					Candidate next = twoExchange(candidate, b, c);
+					if( !next.equals(candidate.parent) )
+						this.add(next);
 				}
 			}
 		}
@@ -62,8 +64,8 @@ class NeighbourList extends ArrayList<Candidate>{
 		int cIndex = answer.indexOf(c);
 		int bIndex = answer.indexOf(b);
 
-		candidate.set(bIndex, c);
-		candidate.set(cIndex, b);
+		answer.set(bIndex, c);
+		answer.set(cIndex, b);
 
 		return answer;
 	}

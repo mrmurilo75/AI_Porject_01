@@ -16,9 +16,11 @@ class Candidate extends ArrayList<Coordinate> {
 
 	public Candidate(Candidate parent){
 		super(parent);
-		this.parent = parent.parent;
+		this.parent = parent;
 		intersectionCount = -1;
 		neighbours = null;
+
+//		System.out.println("Candidate by (Candidate)");
 	}
 
 	public Candidate(ArrayList<Coordinate> parent, byte generator){
@@ -175,16 +177,22 @@ class Candidate extends ArrayList<Coordinate> {
 		return neighbours.get( new Random().nextInt(neighbours.size()) );
 	}
 
+	public void printItself(){
+		System.out.print("Itself: ");
+		Main.printArrayList(this);
+	}
 
 	/*
 	 *
 	 */
 	public void printNeighbours() {
-		 System.out.print("Original order: ");
-		 Main.printArrayList(this);
-		 System.out.println("Number of intersections: " + this.intersectionCount);
-		 for(ArrayList<Coordinate> list : neighbours) {
-			 Main.printArrayList(list);
-		 }
+		if(neighbours == null)
+			neighbours = new NeighbourList(this);
+		System.out.print("Original order: ");
+		Main.printArrayList(this);
+		System.out.println("Number of intersections: " + this.getIntersectionCount());
+		for(ArrayList<Coordinate> list : neighbours) {
+			Main.printArrayList(list);
+		}
 	}
 }
