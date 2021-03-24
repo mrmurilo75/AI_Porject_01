@@ -117,9 +117,7 @@ public class Main {
 				continue;	// restart loop
 			}
 
-
-			printArrayList(result);
-			result.printNeighbours();
+//			result.printNeighbours();
 
 			if(result.getIntersectionCount() != 0) {
 				System.out.println("Please enter the number corresponding to the function you desire.");
@@ -132,24 +130,24 @@ public class Main {
 				choice = stdin.nextInt();
 			}
 
-			while(result.getIntersectionCount() > 0) {
+			while(result.getIntersectionCount() != 0) {
 
 				switch (choice) {
 					case 1:
-						result = new Candidate(result.improveBestFirst());
+						result = result.improveBestFirst();
 						break;
 					case 2:
-						result = new Candidate(result.improveFirst());
+						result = result.improveFirst();
 						break;
 					case 3:
-						result = new Candidate(result.improveLessConflict());
+						result = result.improveLessConflict();
 						break;
 					case 4:
-						result = new Candidate(result.improveRandom());
+						result = result.improveRandom();
 						break;
 					default:
 						System.out.println("Invalid input. Try again.");
-						return;
+						continue;		// restart loop
 				}
 				System.out.print("Current solution: ");
 				printArrayList(result);
