@@ -17,7 +17,13 @@ java bin/Main
 ```
 
 The user will be asked to input a number N of points to be randomly generated, and a boundary M to generate them.
-Then, the user can choose which option he would like to use to generate the first candidate: randomly or nearest-neighbour.
-Finally, the user may then enter the method to choose the next candidates until a simple polygon is found, which will reset the program.
+```bash
+Please enter the number of points to be generated: 
+Please enter the boundary to generate the points: 
+```
+
+Then, the user can choose which option he would like to use to generate the first candidate: randomly or nearest-neighbour. The instructions will appear in the shell.
+
+Finally, the user may then enter the method to choose the next candidates until a simple polygon is found, which will reset the program. The instructions will appear in the shell.
 
 At any given time, the user may exit the program by entering '0'.
