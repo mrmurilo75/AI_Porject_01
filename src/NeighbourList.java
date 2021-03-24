@@ -1,24 +1,21 @@
 import java.util.ArrayList;
-import java.util.TreeMap;
 
-class NeighbourList extends ArrayList<ArrayList<Coordinate>>{
-
-	public NeighbourList(){ super(); }
+class NeighbourList extends ArrayList<Candidate>{
 
 	public NeighbourList(Candidate candidate){
 		super();
 
-		ArrayList<Coordinate> temporaryList = new ArrayList<Coordinate>(candidate.list);
-		temporaryList.add(temporaryList.get(0));
+		ArrayList<Coordinate> base = new ArrayList<>(candidate);
+		base.add(base.get(0));
 		Coordinate a, b, c, d;
 
-		for(int i = 0; i < temporaryList.size()-3; i++) {
-			a = temporaryList.get(i);
-			b = temporaryList.get(i+1);
-			for(int j = i+2; j < temporaryList.size()-1; j++) {
-				if(i == 0 && j == temporaryList.size()-2) continue;
-				c = temporaryList.get(j);
-				d = temporaryList.get(j+1);
+		for(int i = 0; i < base.size()-3; i++) {
+			a = base.get(i);
+			b = base.get(i+1);
+			for(int j = i+2; j < base.size()-1; j++) {
+				if(i == 0 && j == base.size()-2) continue;
+				c = base.get(j);
+				d = base.get(j+1);
 				if(segmentsIntersect(a, b, c, d)) {
 					candidate.intersections++;
 					this.add(twoExchange(candidate, b, c));
@@ -75,13 +72,13 @@ class NeighbourList extends ArrayList<ArrayList<Coordinate>>{
 		return answer;
 	}
 
-	private ArrayList<Coordinate> twoExchange(Candidate candidate, Coordinate b, Coordinate c) {
-		ArrayList<Coordinate> answer = new ArrayList<>(candidate.list);
+	private Candidate twoExchange(Candidate candidate, Coordinate b, Coordinate c) {
+		Candidate answer = new Candidate(candidate);
 		int cIndex = answer.indexOf(c);
 		int bIndex = answer.indexOf(b);
 
-		answer.set(bIndex, c);
-		answer.set(cIndex, b);
+		candidate.set(bIndex, c);
+		candidate.set(cIndex, b);
 
 		return answer;
 	}
