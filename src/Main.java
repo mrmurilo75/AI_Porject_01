@@ -76,7 +76,7 @@ public class Main {
 			System.out.println("Please enter the boundary to generate the points: ");
 			int m = stdin.nextInt();
 
-			if(n>(4*m*m)) return;
+			if(n>(4*m*m)) continue;		// restart loop
 
 			for (int i = 0; i < n; i++) {
 
@@ -110,23 +110,14 @@ public class Main {
 				return;
 			}
 
+			Candidate result = new Candidate(list, (byte)choice);
 
-			ArrayList<Coordinate> base = new ArrayList<>(list);	// a shallow copy (its ok bc we dont change the elements themselves)
-			Candidate result = null;
-
-			switch (choice) {
-				case 1:
-					result = new Candidate(Candidate.randomPermutation(base));
-					break;
-				case 2:
-					result = new Candidate(Candidate.nearestNeighbour(base));
-					break;
-				default:
-					System.out.println("Invalid input. Try again.");
-					continue;		// not sure if this will work
+			if(!result.checkIntegrity()) {
+				System.out.println("Invalid input. Try again.");
+				continue;	// restart loop
 			}
 
-			result.printNeighbours();
+//			result.printNeighbours();
 
 			if(result.intersections != 0) {
 				System.out.println("Please enter the number corresponding to the function you desire.");
@@ -143,20 +134,20 @@ public class Main {
 
 				switch (choice) {
 					case 1:
-						result = new Candidate(result.nbors.get(result.nbors.findSmallestPerimeter()));	
+						result = result.neighbours.get(result.neighbours.findSmallestPerimeter());
 						break;
 					case 2:
-						result = new Candidate(result.nbors.get(0));
+						result = result.neighbours.get(0);
 						break;
 					case 3:
-						result = new Candidate(result.nbors.get(result.nbors.findLessIntersections()));
+						result = result.neighbours.get(result.neighbours.findLessIntersections());
 						break;
 					case 4:
-						result = new Candidate(result.nbors.get(new Random().nextInt(result.nbors.size())));
+						result = result.neighbours.get(new Random().nextInt(result.neighbours.size()));
 						break;
 					default:
 						System.out.println("Invalid input. Try again.");
-						continue;		// not sure if this will work
+						continue;		// restart loop
 				}
 				System.out.print("Current solution: ");
 				printArrayList(result);
