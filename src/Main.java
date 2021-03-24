@@ -71,10 +71,18 @@ public class Main {
 
 			System.out.println("Please enter the number of points to be generated: ");
 			int n = stdin.nextInt();
+			if(n==0) {
+				System.out.println("Exiting...");
+				return;
+			}
 			list = new ArrayList<>(n);
 
 			System.out.println("Please enter the boundary to generate the points: ");
 			int m = stdin.nextInt();
+			if(m==0) {
+				System.out.println("Exiting...");
+				return;
+			}
 
 			if(n>(4*m*m)) continue;		// restart loop
 
