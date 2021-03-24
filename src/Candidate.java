@@ -2,10 +2,16 @@ import java.util.ArrayList;
 import java.util.Random;
 
 class Candidate extends ArrayList<Coordinate> {
-	ArrayList<Coordinate> parent;
+	Candidate parent;
 	public int intersections;
 //	IntersectionList intersected;
 	NeighbourList neighbours;
+
+	public Candidate(ArrayList<Coordinate> parent){
+		super(parent);
+		parent = null;
+		intersections = -1;
+	}
 
 	public Candidate(Candidate parent){
 		super(parent);
@@ -16,7 +22,7 @@ class Candidate extends ArrayList<Coordinate> {
 
 	public Candidate(ArrayList<Coordinate> parent, byte generator){
 		super(parent.size());
-		this.parent = parent;
+		this.parent = new Candidate(parent);
 
 		ArrayList<Coordinate> base; 
 		switch(generator){
