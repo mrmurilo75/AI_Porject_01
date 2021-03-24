@@ -2,17 +2,47 @@ import java.util.ArrayList;
 import java.util.Random;
 
 class Candidate extends ArrayList<Coordinate> {
-	ArrayList<Coordinate> list;
+	ArrayList<Coordinate> parent;
 //	IntersectionList intersected;
-	NeighbourList nbors;
+	NeighbourList neighbours;
 	public int intersections;
 
-	public Candidate(ArrayList<Coordinate> result){
-		super(result);
-		list = result;
+	public Candidate(ArrayList<Coordinate> parent, byte generator){
+		super(parent.size());
+		this.parent = parent;
+
+		ArrayList<Coordinate> base; 
+		switch(generator){
+			case 1:		// generate by Random Permutation
+				base = new  ArrayList<>(parent);
+				while (base.size() > 0) {
+					int i = new Random().nextInt(base.size());
+					this.add(base.remove(i));
+				}
+				break;
+			case 2:		// generate by Nearest Neighbour
+				base = new  ArrayList<>(parent);
+				Coordinate cur = base.remove(0);
+				while (cur != null) {
+					this.add(cur);
+					cur = findNearest(cur, base);
+				}
+				break;
+			default:		// preferably throw Exception
+				parent = null;
+				intersections = -1;
+				return;
+		}
+
 		intersections = 0;
 //		intersected = new IntersectionList(this);
-		nbors = new NeighbourList(this);
+		neighbours = new NeighbourList(this);
+	}
+
+	public boolean checkIntegrity(){
+		if(parent = null)
+			return false;
+		return true;
 	}
 
 	/**
@@ -21,14 +51,8 @@ class Candidate extends ArrayList<Coordinate> {
 	 * @param base   The array containing the points we wish to operate on.
 	 * @param answer The array in which we wish to put the result in.
 	 */
-	public static ArrayList<Coordinate> randomPermutation(ArrayList<Coordinate> base) {
-		ArrayList<Coordinate> answer = new ArrayList<>();
-		int size = base.size();
-		while (size != 0) {
-			int i = new Random().nextInt(size--);
-			answer.add(base.remove(i));
-		}
-		return answer;
+	public static Candidate randomPermutation(ArrayList<Coordinate> base) {
+		return new Candidate(base, (byte)1);
 	}
 
 	/**
@@ -38,15 +62,8 @@ class Candidate extends ArrayList<Coordinate> {
 	 * @param base   The array containing the points we wish to operate on.
 	 * @param answer The array in which we wish to put the result in.
 	 */
-	public static ArrayList<Coordinate> nearestNeighbour(ArrayList<Coordinate> base) {
-		ArrayList<Coordinate> answer = new ArrayList<>();
-
-		Coordinate cur = base.remove(0);
-		while (cur != null) {
-			answer.add(cur);
-			cur = findNearest(cur, base);
-		}
-		return answer;
+	public static Candidate nearestNeighbour(ArrayList<Coordinate> base) {
+		return new Candidate(base, (byte)1);
 	}
 
 	/**
@@ -62,13 +79,10 @@ class Candidate extends ArrayList<Coordinate> {
 
 		int toBeRemoved = 0;
 		int distance = Integer.MAX_VALUE;
-		int curX = cur.getX();
-		int curY = cur.getY();
 
 		for (int i = 0; i < base.size(); i++) {
-			int nextX = base.get(i).getX();
-			int nextY = base.get(i).getY();
-			int nextDist = euclidianDistance(curX, curY, nextX, nextY);
+			Coordinate next = base.get(i);
+			int nextDist = euclidianDistance(cur, next);
 			if (nextDist < distance) {
 				distance = nextDist;
 				toBeRemoved = i;
@@ -91,9 +105,9 @@ class Candidate extends ArrayList<Coordinate> {
 		return (x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2);
 	}
 
-    public static int euclidianDistance(Coordinate a, Coordinate b) {
-        return euclidianDistance(a.getX(), a.getY(), b.getX(), b.getY());
-    }
+	public static int euclidianDistance(Coordinate a, Coordinate b) {
+		return euclidianDistance(a.getX(), a.getY(), b.getX(), b.getY());
+	}
 
 	private void exchange(Coordinate j, Coordinate k) {
 		int ij = this.indexOf(j), ik = this.indexOf(k);
@@ -138,7 +152,7 @@ class Candidate extends ArrayList<Coordinate> {
 		 System.out.print("Original order: ");
 		 Main.printArrayList(this);
 		 System.out.println("Number of intersections: " + this.intersections);
-		 for(ArrayList<Coordinate> list : nbors) {
+		 for(ArrayList<Coordinate> list : neighbours) {
 			 Main.printArrayList(list);
 		 }
 	}
