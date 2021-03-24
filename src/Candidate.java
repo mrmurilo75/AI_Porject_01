@@ -3,9 +3,16 @@ import java.util.Random;
 
 class Candidate extends ArrayList<Coordinate> {
 	ArrayList<Coordinate> parent;
+	public int intersections;
 //	IntersectionList intersected;
 	NeighbourList neighbours;
-	public int intersections;
+
+	public Candidate(Candidate parent){
+		super(parent);
+		this.parent = parent.parent;
+		intersections = 0;
+		neighbours = new NeighbourList(this);
+	}
 
 	public Candidate(ArrayList<Coordinate> parent, byte generator){
 		super(parent.size());
@@ -40,7 +47,7 @@ class Candidate extends ArrayList<Coordinate> {
 	}
 
 	public boolean checkIntegrity(){
-		if(parent = null)
+		if(parent == null)
 			return false;
 		return true;
 	}
