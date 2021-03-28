@@ -33,22 +33,43 @@ class Coordinate implements Comparable<Coordinate>{
 		return new Coordinate(this.x, this.y, this.c);
 	}
 
+	/**
+	 * Performs simple coordinate subtraction.
+	 * @param that the coordinate which we want to subtract.
+	 * @return a new coordinate with the values obtained from the subtraction.
+	 */
 	public Coordinate subtract(Coordinate that) {
 		return new Coordinate(this.x - that.getX(), this.y - that.getY());
 	}
 
-	public int dotProduct(Coordinate that) {
+	/**
+	 * Perfomrs a cross product, which is the determinant of a 2x2 matrix with the coordinates.
+	 * @param that the second coordinate.
+	 * @return an integer which is the determinant.
+	 */
+	public int crossProduct(Coordinate that) {
 		return ((this.x*that.y) - (that.x*this.y));
 	}
 
+	/**
+	 * Getter for X value.
+	 * @return x value.
+	 */
 	public int getX() {
 		return this.x;
 	}
 
+	/**
+	 * Getter for Y value.
+	 * @return y value.
+	 */
 	public int getY() {
 		return this.y;
 	}
 
+	/**
+	 * Default equals method for this class, checking if both x and y are equal.
+	 */
 	@Override
 	public boolean equals(Object o) {
 		if(this==o) return true;
@@ -58,6 +79,9 @@ class Coordinate implements Comparable<Coordinate>{
 		return (this.x==c.x && this.y==c.y);
 	}
 
+	/**
+	 * Writes the coordinate as (X, Y).
+	 */
 	@Override
 	public String toString() {
 		return "(" + this.x + ", " + this.y + ")";

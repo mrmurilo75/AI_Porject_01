@@ -3,7 +3,13 @@ import java.util.ArrayList;
 import java.util.TreeSet;
 import java.util.Random;
 
-
+/**
+ * The program asks the user for inputs to choose a way of generating, correcting and returning a simple polygon (Hamilton cycle with no intersections)
+ * from a collection of randomly generated points in a 2D space.
+ * 
+ * @author Felipe Valverde
+ * @author Murilo Rosa
+ */
 public class Main {
 	static Scanner stdin;
 	static ArrayList<Coordinate> list;
@@ -64,6 +70,10 @@ public class Main {
 		System.out.println(ans);
 	}
 
+	/**
+	 * Generates text to the user and waits for a response, to determine the methods which will be used to achieve the final goal.
+	 * @param args A String array containing command line arguments (not used).
+	 */
 	public static void main(String[] args) {
 		stdin = new Scanner(System.in);
 

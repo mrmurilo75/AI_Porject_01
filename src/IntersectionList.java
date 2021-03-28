@@ -41,7 +41,7 @@ class IntersectionList extends ArrayList< Pair<Pair<Coordinate>> >{
 	}
 
 	private static int dot(Coordinate p1, Coordinate p2, Coordinate p3) {
-		return (p3.subtract(p1)).dotProduct(p1.subtract(p2));
+		return (p3.subtract(p1)).crossProduct(p1.subtract(p2));
 	}
 
 }

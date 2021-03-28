@@ -45,6 +45,11 @@ class Candidate extends ArrayList<Coordinate> {
 //		System.out.println("Candidate by (Candidate)");
 	}
 
+	/**
+	 * Constructor for a Candidate which takes the selected method as an input.
+	 * @param parent The list of coordinates to build the Candidate.
+	 * @param generator The choice of method (1 for random, 2 for nearest neighbour).
+	 */
 	public Candidate(ArrayList<Coordinate> parent, byte generator){
 		super(parent.size());
 		this.parent = new Candidate(parent);
@@ -88,21 +93,21 @@ class Candidate extends ArrayList<Coordinate> {
 	 * Generates a random permutation of the points in an array.
 	 *
 	 * @param base   The array containing the points we wish to operate on.
-	 * @param answer The array in which we wish to put the result in.
+	 * @return The Candidate containing the points in a random order.
 	 */
 	public static Candidate randomPermutation(ArrayList<Coordinate> base) {
 		return new Candidate(base, (byte)1);
 	}
 
 	/**
-	 * Insert into the answer ArrayList the neighbours sorted by who is nearest to
+	 * Insert into an ArrayList the neighbours sorted by who is nearest to
 	 * the starting point.
 	 *
 	 * @param base   The array containing the points we wish to operate on.
-	 * @param answer The array in which we wish to put the result in.
+	 * @return The Candidate containing the points sorted by the Nearest Neighbour technique.
 	 */
 	public static Candidate nearestNeighbour(ArrayList<Coordinate> base) {
-		return new Candidate(base, (byte)1);
+		return new Candidate(base, (byte)2);
 	}
 
 	/**
@@ -144,6 +149,12 @@ class Candidate extends ArrayList<Coordinate> {
 		return (x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2);
 	}
 
+	/**
+	 * Find the square of the euclidian distance between two coordinates
+	 * @param a The first coordinate
+	 * @param b The second coordinate
+	 * @return the square of the euclidian distance.
+	 */
 	public static int euclidianDistance(Coordinate a, Coordinate b) {
 		return euclidianDistance(a.getX(), a.getY(), b.getX(), b.getY());
 	}
