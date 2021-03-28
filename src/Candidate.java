@@ -1,12 +1,30 @@
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * A class to represent a series of lines connecting points in a 2D space.
+ * The methods and variables in this class aim to build a program which can consistently generate from a series of points a polygon, or, more technically described,
+ * a Hamilton cycle with no intersections. 
+ * 
+ * @author Felipe Valverde
+ * @author Murilo Rosa
+ * 
+ */
 class Candidate extends ArrayList<Coordinate> {
+	
+	private static final long serialVersionUID = 1L;
 	Candidate parent;
 	private int intersectionCount;
 //	IntersectionList intersected;
+	/**
+	 * A List of lists which keep all the candidates obtainable from one single 2-exchange within the current candidate.
+	 */
 	NeighbourList neighbours;
 
+	/**
+	 * Constructor for the class Candidate
+	 * @param parent The arrayList that serves as the starting point for generating the initial candidate.
+	 */
 	public Candidate(ArrayList<Coordinate> parent){
 		super(parent);
 		parent = null;
@@ -14,6 +32,10 @@ class Candidate extends ArrayList<Coordinate> {
 		neighbours = null;
 	}
 
+	/**
+	 * Constructor for a child of the class Candidate.
+	 * @param parent The candidate which we want our new candidate to be a son of.
+	 */
 	public Candidate(Candidate parent){
 		super(parent);
 		this.parent = parent;
@@ -54,6 +76,10 @@ class Candidate extends ArrayList<Coordinate> {
 		neighbours = null;
 	}
 
+	/**
+	 * Guarantees that the candidate did not add or delete any node.
+	 * @return true if the candidate has as many points as its parent.
+	 */
 	public boolean checkIntegrity(){
 		return this.size() == parent.size();
 	}
@@ -130,8 +156,9 @@ class Candidate extends ArrayList<Coordinate> {
 	}
 	*/
 
-	/*
-	 *
+	/**
+	 * Counts how many lines cross in the present candidate.
+	 * @return an integer with the number of intersections.
 	 */
 	public int getIntersectionCount(){
 		if(neighbours == null)
@@ -141,8 +168,9 @@ class Candidate extends ArrayList<Coordinate> {
 		return intersectionCount;
 	}
 		
-	/*
-	 *
+	/**
+	 * Checks the perimeter of every neighbour candidate and finds the smallest.
+	 * @return the candidate with the smallest perimeter.
 	 */
 	public Candidate improveBestFirst() {
 		if(neighbours == null)
@@ -150,8 +178,9 @@ class Candidate extends ArrayList<Coordinate> {
 		return neighbours.getSmallestPerimeter();
 	}
 
-	/*
-	 *
+	/**
+	 * Chooses the first candidate in the list of neighbours.
+	 * @return the candidate ate index 0 in the neighbour list.
 	 */
 	public Candidate improveFirst(){
 		if(neighbours == null)
@@ -159,8 +188,9 @@ class Candidate extends ArrayList<Coordinate> {
 		return neighbours.get(0);
 	}
 
-	/*
-	 *
+	/**
+	 * Counts the number of conflicts in every candidate in the neighbour list.
+	 * @return the neighbour which has the less number of intersections.
 	 */
 	public Candidate improveLessConflict() {
 		if(neighbours == null)
@@ -168,8 +198,10 @@ class Candidate extends ArrayList<Coordinate> {
 		return neighbours.getLessIntersections();
 	}
 
-	/*
-	 *
+	
+	/**
+	 * Gets a random neighbour.
+	 * @return a random neighbour.
 	 */
 	public Candidate improveRandom() {
 		if(neighbours == null)
@@ -177,13 +209,16 @@ class Candidate extends ArrayList<Coordinate> {
 		return neighbours.get( new Random().nextInt(neighbours.size()) );
 	}
 
+	/**
+	 * Prints the candidate itself using printArrayList.
+	 */
 	public void printItself(){
 		System.out.print("Itself: ");
 		Main.printArrayList(this);
 	}
 
-	/*
-	 *
+	/**
+	 * Prints every candidate in the neighbourList of the current candidate. 
 	 */
 	public void printNeighbours() {
 		if(neighbours == null)
