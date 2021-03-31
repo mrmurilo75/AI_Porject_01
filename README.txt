@@ -28,7 +28,7 @@ Then, the user can choose which option he would like to use to generate the firs
 
 Finally, the user may then enter the method to choose the next candidates until a simple polygon is found, which will restart the program. The instructions will appear in the terminal.
 
-#Queries Resolved
+# Queries Resolved
 
 So far, we've successfully implemented the queries 1., 2.a, 2.b, 3., 4.a, 4.b, 4.c and 4.d from the project guideline.
 
@@ -58,7 +58,7 @@ O usuário deve então escolher por qual método quer que seja gerado o primeiro
 
 Finalmente, o usuário deve escolher também o método que será usado para gerar os filhos do candidato atual até que se chegue a um polígono simples.
 
-#Questões Resolvidas
+# Questões Resolvidas
 
 Atéo momento foi implementada com sucesso as questões 1., 2.a, 2.b, 3., 4.a, 4.b, 4.c and 4.d do projecto.
 
