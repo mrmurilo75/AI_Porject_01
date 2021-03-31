@@ -49,7 +49,7 @@ java Main
 ```
 
 O usuário será pedido para entrar um número N de pontos que serão gerados aleatoriamente e um limite M.
-/bin/bash: wq: command not found
+```bash
 Please enter the number of points to be generated: 
 Please enter the boundary to generate the points: 
 ```
