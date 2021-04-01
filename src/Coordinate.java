@@ -1,7 +1,7 @@
 class Coordinate implements Comparable<Coordinate>{
 	private int x;
 	private int y;
-	private char c;
+	private int c;
 	private double distance; // Note: I don't think we even need this.
 
 	/**
@@ -10,7 +10,7 @@ class Coordinate implements Comparable<Coordinate>{
 	 * @param y Y coordinate.
 	 * @param c Letter to represent the point.
 	 */
-	public Coordinate(int x, int y, char c) {
+	public Coordinate(int x, int y, int c) {
 		this.x = x;
 		this.y = y;
 		this.c = c;
@@ -92,7 +92,7 @@ class Coordinate implements Comparable<Coordinate>{
 	 * @return the letter that represents the point.
 	 */
 	public String printName() {
-		return Character.toString(c);
+		return Integer.toString(c);
 	}
 
 	@Override

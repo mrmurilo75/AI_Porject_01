@@ -101,7 +101,7 @@ public class Main {
 				int x = new Random().nextInt(2 * m - 1) - m;
 				int y = new Random().nextInt(2 * m - 1) - m;
 
-				Coordinate coor = new Coordinate(x, y, (char) ('A' + i));
+				Coordinate coor = new Coordinate(x, y, i);
 				if (list.contains(coor))
 					i--; 		//  n/(2*m)^2 chance
 				else
