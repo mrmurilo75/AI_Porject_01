@@ -87,25 +87,53 @@ public class Main {
 			}
 			list = new ArrayList<>(n);
 
-			System.out.println("Please enter the boundary to generate the points: ");
-			int m = stdin.nextInt();
-			if(m==0) {
+			System.out.println("Please enter the number corresponding to the function you desire.");
+			System.out.println("1 - Enter Coordinates");
+			System.out.println("2 - Randomly Generate");
+			System.out.println("0 - Exit the program.");
+			int p = stdin.nextInt();
+			if(p==0) {
 				System.out.println("Exiting...");
 				return;
 			}
+			if(p==1){
+				Scanner generator = stdin;
 
-			if(n>(4*m*m)) continue;		// restart loop
+				for (int i = 0; i < n; i++) {
 
-			for (int i = 0; i < n; i++) {
+					int x = generator.nextInt();
+					int y = generator.nextInt();
 
-				int x = new Random().nextInt(2 * m - 1) - m;
-				int y = new Random().nextInt(2 * m - 1) - m;
+					Coordinate coor = new Coordinate(x, y, i);
+					if (list.contains(coor))
+						i--; 		//  n/(2*m)^2 chance
+					else
+						list.add(coor);
+				}
+			}
+			if(p==2){
+				Random generator = new Random();
 
-				Coordinate coor = new Coordinate(x, y, i);
-				if (list.contains(coor))
-					i--; 		//  n/(2*m)^2 chance
-				else
-					list.add(coor);
+				System.out.println("Please enter the boundary to generate the points: ");
+				int m = stdin.nextInt();
+				if(m==0) {
+					System.out.println("Exiting...");
+					return;
+				}
+
+				if(n>(4*m*m)) continue;		// restart loop
+
+				for (int i = 0; i < n; i++) {
+
+					int x = generator.nextInt(2 * m - 1) - m;
+					int y = generator.nextInt(2 * m - 1) - m;
+
+					Coordinate coor = new Coordinate(x, y, i);
+					if (list.contains(coor))
+						i--; 		//  n/(2*m)^2 chance
+					else
+						list.add(coor);
+				}
 			}
 
 			for (Coordinate c : list) {
