@@ -101,7 +101,6 @@ public class Main {
 				Scanner generator = stdin;
 
 				for (int i = 0; i < n; i++) {
-
 					int x = generator.nextInt();
 					int y = generator.nextInt();
 
@@ -125,7 +124,6 @@ public class Main {
 				if(n>(4*m*m)) continue;		// restart loop
 
 				for (int i = 0; i < n; i++) {
-
 					int x = generator.nextInt(2 * m - 1) - m;
 					int y = generator.nextInt(2 * m - 1) - m;
 
@@ -147,75 +145,93 @@ public class Main {
 			System.out.println("Please enter the number corresponding to the function you desire.");
 			System.out.println("1 - Random permutation");
 			System.out.println("2 - Nearest Neighbour");
+			System.out.println("3 - Ant Colony Optimization");
 			System.out.println("0 - Exit the program.");
 
 			choice = stdin.nextInt();
 
-			if(choice == 0){
-				System.out.println("Exiting...");
-				stdin.close();
-				return;
+			Candidate result;
+			switch(choice){
+				case 0:
+					System.out.println("Exiting...");
+					stdin.close();
+					return;
+				case 1:
+				case 2:
+					result = new Candidate(list, (byte)choice);
+					break;
+				case 3:
+					System.out.println("Please enter a limit number of ants: ");
+					int maxIterations = stdin.nextInt();
+					result = new Candidate(list, (byte)choice);
+					while((--maxIterations) > 0)
+						result = result.nextAnt();
+					break;
+				default:
+					System.out.println("Invalid input. Try again.");
+					continue;
 			}
-
-			Candidate result = new Candidate(list, (byte)choice);
 
 			if(!result.checkIntegrity()) {
 				System.out.println("Invalid input. Try again.");
 				continue;	// restart loop
 			}
 
-//			result.printNeighbours();
-
 			if(result.getIntersectionCount() != 0) {
-				System.out.println("Please enter the number corresponding to the function you desire.");
-				System.out.println("1 - Best-improvement First");
-				System.out.println("2 - First-improvement");
-				System.out.println("3 - Less-conflicts");
-				System.out.println("4 - Anyone");
-				System.out.println("5 - Simulated Annealing (amount of intersections)");
-				System.out.println("0 - Exit the program.");
 
-				choice = stdin.nextInt();
-			}
+	//			result.printNeighbours();
 
-			while(result.getIntersectionCount() != 0) {
+				if(result.getIntersectionCount() != 0) {
+					System.out.println("Please enter the number corresponding to the function you desire.");
+					System.out.println("1 - Best-improvement First");
+					System.out.println("2 - First-improvement");
+					System.out.println("3 - Less-conflicts");
+					System.out.println("4 - Anyone");
+					System.out.println("5 - Simulated Annealing (amount of intersections)");
+					System.out.println("# - Exit the program.");
 
-				switch (choice) {
-					case 1:
-						result = result.improveBestFirst();
-						break;
-					case 2:
-						result = result.improveFirst();
-						break;
-					case 3:
-						result = result.improveLessConflict();
-						break;
-					case 4:
-						result = result.improveRandom();
-						break;
-					case 5:
-						System.out.println("Please enter a limit number of annealing iterations: ");
-						int maxIterations = stdin.nextInt();
-						double probability = 1.0;
-						Candidate next;
-						while( (--maxIterations) > 0 && probability > 0){
-							probability *= 0.98;
-							next = result.improveRandom();
-							int delta = next.getIntersectionCount() - result.getIntersectionCount();
-							if(delta > 0)
-								result = next;
-							else if (random.nextDouble() > probability)
-								result = next;
-						}
-						choice = 3;		// change to find result by less conflicting
-						break;
-					default:
-						System.out.println("Invalid input. Try again.");
-						continue;		// restart loop
+					choice = stdin.nextInt();
 				}
 
-				System.out.print("Current solution: ");
-				printArrayList(result);
+				while(result.getIntersectionCount() != 0) {
+
+					switch (choice) {
+						case 1:
+							result = result.improveBestFirst();
+							break;
+						case 2:
+							result = result.improveFirst();
+							break;
+						case 3:
+							result = result.improveLessConflict();
+							break;
+						case 4:
+							result = result.improveRandom();
+							break;
+						case 5:
+							System.out.println("Please enter a limit number of annealing iterations: ");
+							int maxIterations = stdin.nextInt();
+							double probability = 1.0;
+							Candidate next;
+							while( (--maxIterations) > 0 && probability > 0){
+								probability *= 0.98;
+								next = result.improveRandom();
+								int delta = next.getIntersectionCount() - result.getIntersectionCount();
+								if(delta > 0)
+									result = next;
+								else if (random.nextDouble() > probability)
+									result = next;
+							}
+							choice = 3;		// change to find result by less conflicting
+							break;
+						default:
+							System.out.println("Invalid input. Try again.");
+							choice = 0;
+					}
+
+					System.out.print("Current solution: ");
+					printArrayList(result);
+				}
 			}
 
 			System.out.print("Found the simple polygon: ");
