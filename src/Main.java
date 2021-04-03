@@ -13,6 +13,7 @@ import java.util.Random;
 public class Main {
 	static Scanner stdin;
 	static ArrayList<Coordinate> list;
+	static Random random = new Random();		// create new random generator
 
 	/*
 	 *
@@ -112,7 +113,7 @@ public class Main {
 				}
 			}
 			if(p==2){
-				Random generator = new Random();
+				Random generator = random;
 
 				System.out.println("Please enter the boundary to generate the points: ");
 				int m = stdin.nextInt();
@@ -171,6 +172,7 @@ public class Main {
 				System.out.println("2 - First-improvement");
 				System.out.println("3 - Less-conflicts");
 				System.out.println("4 - Anyone");
+				System.out.println("5 - Simulated Annealing (amount of intersections)");
 				System.out.println("0 - Exit the program.");
 
 				choice = stdin.nextInt();
@@ -191,13 +193,31 @@ public class Main {
 					case 4:
 						result = result.improveRandom();
 						break;
+					case 5:
+						System.out.println("Please enter a limit number of annealing iterations: ");
+						int maxIterations = stdin.nextInt();
+						double probability = 1.0;
+						Candidate next;
+						while( (--maxIterations) > 0 && probability > 0){
+							probability *= 0.98;
+							next = result.improveRandom();
+							int delta = next.getIntersectionCount() - result.getIntersectionCount();
+							if(delta > 0)
+								result = next;
+							else if (random.nextDouble() > probability)
+								result = next;
+						}
+						choice = 3;		// change to find result by less conflicting
+						break;
 					default:
 						System.out.println("Invalid input. Try again.");
 						continue;		// restart loop
 				}
+
 				System.out.print("Current solution: ");
 				printArrayList(result);
 			}
+
 			System.out.print("Found the simple polygon: ");
 			printArrayList(result);
 			System.out.println(" ----------------------------  ");
