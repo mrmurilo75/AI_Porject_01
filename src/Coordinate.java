@@ -2,6 +2,7 @@ class Coordinate implements Comparable<Coordinate>{
 	private int x;
 	private int y;
 	private int c;
+	private String name;
 	private double distance; // Note: I don't think we even need this.
 
 	/**
@@ -14,13 +15,15 @@ class Coordinate implements Comparable<Coordinate>{
 		this.x = x;
 		this.y = y;
 		this.c = c;
+		this.name = makeName();
 		this.distance = Double.POSITIVE_INFINITY;
 	}
 
 	public Coordinate(int x, int y) {
 		this.x = x;
 		this.y = y;
-		this.c = '\0';
+		this.c = 0;
+		this.name = null;
 		this.distance = Double.POSITIVE_INFINITY;
 	}
 
@@ -87,12 +90,18 @@ class Coordinate implements Comparable<Coordinate>{
 		return "(" + this.x + ", " + this.y + ")";
 	}
 
+	private String makeName() {
+		if(c<26)
+			return ""+(char)('A'+ c%26);
+		return (char)('A'+ c%26)+Integer.toString(c/26-1);
+	}
+
 	/**
 	 *
 	 * @return the letter that represents the point.
 	 */
 	public String printName() {
-		return "A"+(char)(c%26)+Integer.toString(c/26);
+		return name;
 	}
 
 	@Override
