@@ -168,6 +168,22 @@ class Candidate extends ArrayList<Coordinate> {
 	*/
 
 	/**
+	 *
+	 * @param none
+	 * @return the preimeter of the path given by this Candidate.
+	 */
+	public int getPerimeter(){
+		int curPerimeter = 0;
+		for(int j = 0; j < this.size(); j++) {
+			if(j < this.size()-1)
+				curPerimeter += Candidate.euclidianDistance(this.get(j), this.get(j+1));
+			else 
+				curPerimeter += Candidate.euclidianDistance(this.get(j), this.get(0));
+		}
+		return curPerimeter;
+	}
+
+	/**
 	 * Counts how many lines cross in the present candidate.
 	 * @return an integer with the number of intersections.
 	 */
