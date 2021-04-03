@@ -92,7 +92,7 @@ class Coordinate implements Comparable<Coordinate>{
 	 * @return the letter that represents the point.
 	 */
 	public String printName() {
-		return Integer.toString(c);
+		return "A"+(char)(c%26)+Integer.toString(c/26);
 	}
 
 	@Override
