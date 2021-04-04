@@ -55,17 +55,19 @@ class Candidate extends ArrayList<Coordinate> {
 		this.parent = new Candidate(parent);
 
 		ArrayList<Coordinate> base; 
+		Coordinate cur = null;
+		base = new ArrayList<>(parent);
 		switch(generator){
 			case 1:		// generate by Random Permutation
-				base = new  ArrayList<>(parent);
 				while (base.size() > 0) {
 					int i = new Random().nextInt(base.size());
 					this.add(base.remove(i));
 				}
 				break;
 			case 2:		// generate by Nearest Neighbour
-				base = new  ArrayList<>(parent);
-				Coordinate cur = base.remove(0);
+				cur = base.remove(0);
+			case 3:
+				if(cur ==null) cur = base.remove( (new Random()).nextInt(this.size()) );
 				while (cur != null) {
 					this.add(cur);
 					cur = findNearest(cur, base);
