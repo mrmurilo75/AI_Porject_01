@@ -165,8 +165,9 @@ public class Main {
 					int maxIterations = stdin.nextInt();
 					result = new Candidate(list, (byte)choice);
 					while((--maxIterations) > 0){
-						System.out.println("nextAnt");
 						result = result.nextAnt();
+						System.out.print("Current solution: ");
+						printArrayList(result);
 					}
 					break;
 				default:
@@ -209,7 +210,6 @@ public class Main {
 							break;
 						case 4:
 							result = result.improveRandom();
-							System.out.println(result.size());
 							break;
 						case 5:
 							System.out.println("Please enter a limit number of annealing iterations: ");

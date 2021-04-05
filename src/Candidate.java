@@ -44,26 +44,9 @@ class Candidate extends ArrayList<Coordinate> {
 		this.parent = parent;
 		intersectionCount = -1;
 		neighbours = null;
-/*
-		if(pheromorn != null){
-			ArrayList<Coordinate> base = new ArrayList<>(parent);
-			Coordinate cur, next;
-		System.out.println("!!!!!!!!!!!!"+this.size());
-		
-			cur = base.remove( (new Random()).nextInt(parent.size()) );	// start at a random
-			while (cur != null) {
-				this.add(cur);
-				cur = findAntPath(cur, base);
-				if(!base.remove(cur))
-					break;
-			}
-			double L = (double)getPerimeter();
-			for(int i=1; i<this.size(); i++)
-				pheromorn.put( new Pair<Coordinate>(this.get(i-1), this.get(i)), (double) Q/L);
-			pheromorn.put( new Pair<Coordinate>(this.get(size()-1), this.get(0)), (double) Q/L);
-		}
+
 //		System.out.println("Candidate by (Candidate)");
-*/	}
+	}
 
 	/**
 	 * Constructor for a Candidate which takes the selected method as an input.
@@ -111,6 +94,30 @@ class Candidate extends ArrayList<Coordinate> {
 		intersectionCount = -1;
 //		intersected = new IntersectionList(this);
 		neighbours = null;
+	}
+
+	private Candidate(Candidate parent, boolean isAnt){
+		super(parent.size());
+		this.parent = parent;
+		intersectionCount = -1;
+		neighbours = null;
+
+		if(isAnt && pheromorn != null){
+			ArrayList<Coordinate> base = new ArrayList<>(parent);
+			Coordinate cur, next;
+		
+			cur = base.remove( (new Random()).nextInt(parent.size()) );	// start at a random
+			while (cur != null) {
+				this.add(cur);
+				cur = findAntPath(cur, base);
+				if(!base.remove(cur))
+					break;
+			}
+			double L = (double)getPerimeter();
+			for(int i=1; i<this.size(); i++)
+				pheromorn.put( new Pair<Coordinate>(this.get(i-1), this.get(i)), (double) Q/L);
+			pheromorn.put( new Pair<Coordinate>(this.get(size()-1), this.get(0)), (double) Q/L);
+		}
 	}
 
 	/**
@@ -274,7 +281,7 @@ class Candidate extends ArrayList<Coordinate> {
 	 */
 	public Candidate nextAnt(){
 		if(Q != null && pheromorn != null)
-			return new Candidate(this);
+			return new Candidate(this, true);
 		return null;
 	}
 
